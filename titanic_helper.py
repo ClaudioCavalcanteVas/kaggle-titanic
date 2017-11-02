@@ -24,8 +24,31 @@ def prepareTitanicDf( titanic_dataframe ):
     title    = fixTitle(titanic_dataframe) 
     cabin    = fixCabin(titanic_dataframe)
     ticket   = fixTicket( titanic_dataframe )
+    imputed  = fixAgeAndFare( titanic_dataframe )
+    family   = fixFamilySize( titanic_dataframe )
     
-    return pd.concat( [ sex, embarked, pClass, title, cabin, ticket ], axis=1 );
+    return pd.concat( 
+            [ sex, embarked, pClass, title, cabin, ticket, imputed, family ], 
+            axis=1 
+        );
+    
+def fixFamilySize( titanic_dataframe ): 
+    family = pd.DataFrame()
+
+    # introducing a new feature : the size of families (including the passenger)
+    family[ 'FamilySize' ] = titanic_dataframe[ 'Parch' ] + titanic_dataframe[ 'SibSp' ] + 1
+    
+    # introducing other features based on the family size
+    family[ 'Family_Single' ] = family[ 'FamilySize' ].map( lambda s : 1 if s == 1 else 0 )
+    family[ 'Family_Small' ]  = family[ 'FamilySize' ].map( lambda s : 1 if 2 <= s <= 4 else 0 )
+    family[ 'Family_Large' ]  = family[ 'FamilySize' ].map( lambda s : 1 if 5 <= s else 0 )
+    
+    return family;
+
+def fixAgeAndFare( titanic_dataframe ):
+    imputed = pd.DataFrame()
+    imputed['Age'] = titanic_dataframe.Age.fillna( titanic_dataframe.Age.mean() )
+    imputed['Fare'] = titanic_dataframe.Fare.fillna( titanic_dataframe.Fare.mean() )
     
 
 def cleanTicket(ticket):

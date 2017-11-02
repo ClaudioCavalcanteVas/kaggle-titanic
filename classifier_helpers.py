@@ -36,7 +36,7 @@ def checkPredictions(X_all, y_all, classifiers, data_ranges, train_size ):
             
             train_predict(clf, X_train[:rng], y_train[:rng], X_test, y_test)
         
-    print( "\n\n" )
+    print( "\n\nENDSSS" );
 
 def train_classifier(clf, X_train, y_train):
     ''' Fits a classifier to the training data. '''
