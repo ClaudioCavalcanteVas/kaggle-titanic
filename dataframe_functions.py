@@ -8,7 +8,7 @@ Some DataFrame helper functions
 @author: ais
 """
 
-def splitColumn( dataFrame, targetColumn, axis ):
+def splitColumn( dataFrame, targetColumn, axis = 1 ):
     """
     This function splits the dataFrame by a target column and 
     returns a tuple with these values
@@ -24,7 +24,7 @@ def splitColumn( dataFrame, targetColumn, axis ):
     
     """
     return [ 
-            dataFrame.split(targetColumn, axis=axis), 
+            dataFrame.drop(targetColumn, axis=axis), 
             dataFrame[targetColumn]  
            ]
 

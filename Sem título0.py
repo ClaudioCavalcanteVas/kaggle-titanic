@@ -14,8 +14,6 @@ warnings.filterwarnings('ignore')
 import numpy as np
 import pandas as pd
 
-import plot_function
-
 # Modelling Algorithms
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
